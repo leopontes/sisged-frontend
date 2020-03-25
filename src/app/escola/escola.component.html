@@ -1,0 +1,82 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Cadastro de escola</h4>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="escolaForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="dateOfBirth">Nome</label>
+        <div class="input-group">
+          <input formControlName="nome" placeholder="Nome completo" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="dateOfBirth">Contato</label>
+        <div class="input-group">
+          <input formControlName="contato" placeholder="(99) 99999-9999" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="dateOfBirth">Local</label>
+        <div class="input-group">
+          <input formControlName="local" placeholder="Rua, Número Bairro Cidade e Estado" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="dateOfBirth">Diretor</label>
+        <div class="input-group">
+          <input formControlName="diretor" placeholder="Nome completo do diretor da instituição" class="form-control">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" (click)="modal.dismiss('cancel click')">Cancelar</button>
+        <button type="submit" class="btn btn-dark" [disabled]="!escolaForm.valid">Salvar</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<button class="btn btn-dark" (click)="open(content)">Cadastrar escola</button>
+
+<hr>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroup-sizing-default">
+      <i class="fas fa-search"></i>
+    </span>
+  </div>
+  <input [(ngModel)]="searchText" #ctrl="ngModel" class="form-control">
+</div>
+
+<div class="table-responsive-xl">
+  <table class="table table-striped table-bordered table-sm">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Nome</th>
+        <th scope="col">Contato</th>
+        <th scope="col">Local</th>
+        <th scope="col">Diretor(a)</th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let escola of allEscolas | filter : searchText">
+        <td>{{escola.nome}}</td>
+        <td>{{escola.contato}}</td>
+        <td>{{escola.local}}</td>
+        <td>{{escola.diretor}}</td>
+        <td>
+          <button type="button" (click)="loadEscolaToEdit(escola.id, content)">
+            <i class="fas fa-pen"></i>
+          </button>
+        </td>
+        <td>
+          <button type="button" (click)="deleteEscola(escola.id)">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

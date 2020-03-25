@@ -1,0 +1,94 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Cadastro de turma</h4>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="turmaForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="dateOfBirth">Código</label>
+          <div class="input-group">
+            <input formControlName="codigo" placeholder="Código da turma" class="form-control">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="dateOfBirth">Ano</label>
+          <div class="input-group">
+            <input formControlName="ano" placeholder="(yyyy)" class="form-control">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="dateOfBirth">Tipo de Ensino</label>
+          <div class="input-group">
+            <select formControlName="tipoEnsino" class="form-control">
+              <option value="1">Ensino Fundamental</option>
+              <option value="2">Ensino Médio</option>
+              <option value="3">Ensino Superior</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="dateOfBirth">Escola</label>
+          <div class="input-group">
+            <select formControlName="escolaId" class="form-control">
+              <option *ngFor="let escola of allEscolas" value={{escola.id}}>
+                {{escola.nome}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-dark" (click)="modal.dismiss('cancel click')">Cancelar</button>
+          <button type="button" class="btn btn-dark" (click)="onSubmit()" [disabled]="!turmaForm.valid">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+  
+  <button class="btn btn-dark" (click)="open(content)">Cadastrar turma</button>
+  
+  <hr>
+  
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-default">
+        <i class="fas fa-search"></i>
+      </span>
+    </div>
+    <input [(ngModel)]="searchText" #ctrl="ngModel" class="form-control">
+  </div>
+  
+  <div class="table-responsive-xl">
+    <table class="table table-striped table-bordered table-sm">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Tipo de Ensino</th>
+          <th scope="col">Codigo</th>
+          <th scope="col">Ano</th>
+          <th scope="col">Escola</th>
+          <th colspan="2"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let turma of allTurmas | turmaFilter : searchText">
+          <td>
+            <span *ngIf="turma.tipoEnsino == 1">Ensino Fundamental</span>
+            <span *ngIf="turma.tipoEnsino == 2">Ensino Médio</span>
+            <span *ngIf="turma.tipoEnsino == 3">Ensino Superior</span>
+          </td>
+          <td>{{turma.codigo}}</td>
+          <td>{{turma.ano}}</td>
+          <td>{{turma.escola.nome}}</td>
+          <td>
+            <button type="button" (click)="loadTurmaToEdit(turma.id, content)">
+              <i class="fas fa-pen"></i>
+            </button>
+          </td>
+          <td>
+            <button type="button" (click)="deleteTurma(turma.id)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
