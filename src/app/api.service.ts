@@ -3,7 +3,7 @@ import { Escola } from './escola';
 import { Turma } from './turma';
 
 const apiClient = axios.create({
-  baseURL: 'https://localhost:5001/api',
+  baseURL: 'https://sisged-backend.herokuapp.com/api',
   responseType: 'json',
   headers:{
     'Content-Type': 'application/json'
