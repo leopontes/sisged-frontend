@@ -1,10 +1,10 @@
 {
   "name": "sis-ged-frontend",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "heroku-postbuild": "npm install",
     "ng": "ng",
-    "start": "npm install && ng serve",
+    "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
